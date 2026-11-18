@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ParolaBazaDeDate1!
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - market-net
+
+  web:
+    build: .
+    container_name: campus_market_web
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=CampusMarketDb;User Id=sa;Password=ParolaBazaDeDate1!;TrustServerCertificate=True;
+    depends_on:
+      - db
+    networks:
+      - market-net
+
+volumes:
+  mssql_data:
+
+networks:
+  market-net:
+    driver: bridge
