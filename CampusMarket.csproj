@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <NoWarn>$(NoWarn);NU1901;NU1902;NU1903;NU1904</NoWarn>
     <UserSecretsId>aspnet-CampusMarket-a147a7a5-37ae-4265-83f7-e100e4cd5de1</UserSecretsId>
   </PropertyGroup>
 
