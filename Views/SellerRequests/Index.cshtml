@@ -1,0 +1,78 @@
+﻿@model IEnumerable<CampusMarket.Models.SellerRequest>
+
+@{
+    ViewData["Title"] = "Cereri vanzatori";
+}
+
+<h2 class="mb-4">Cereri pentru rolul de vanzator</h2>
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["message"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Nu exista cereri momentan.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Utilizator</th>
+                <th>Nume</th>
+                <th>Telefon</th>
+                <th>Motiv</th>
+                <th>Data cererii</th>
+                <th>Status</th>
+                <th>Actiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var req in Model)
+            {
+                <tr>
+                    <td>@req.User?.Email</td>
+                    <td>@req.FullName</td>
+                    <td>@req.PhoneNumber</td>
+                    <td>@req.Reason</td>
+                    <td>@req.RequestDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>
+                        @if (req.Status == "In asteptare")
+                        {
+                            <span class="badge bg-warning text-dark">@req.Status</span>
+                        }
+                        else if (req.Status == "Aprobata")
+                        {
+                            <span class="badge bg-success">@req.Status</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">@req.Status</span>
+                        }
+                    </td>
+                    <td>
+                        @if (req.Status == "In asteptare")
+                        {
+                            <div class="d-flex gap-2">
+                                <form method="post" asp-controller="SellerRequests" asp-action="Approve" asp-route-id="@req.Id">
+                                    <button type="submit" class="btn btn-success btn-sm">Aproba</button>
+                                </form>
+                                <form method="post" asp-controller="SellerRequests" asp-action="Reject" asp-route-id="@req.Id">
+                                    <button type="submit" class="btn btn-danger btn-sm">Respinge</button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">-</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
