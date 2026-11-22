@@ -89,7 +89,7 @@ namespace CampusMarket.Controllers
 
             var name = reqCat.Name.Trim().ToLower();
             var exist = await _db.Categories
-                .AnyAsync(c => c.Name.ToLower() == name);
+                .AnyAsync(c =>c.Id != id && c.Name.ToLower() == name);
             if (exist)
             {
                 ModelState.AddModelError("Name", "Exista deja o categorie cu acest nume");
