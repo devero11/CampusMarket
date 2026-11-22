@@ -1,0 +1,25 @@
+﻿@model CampusMarket.Models.Category
+
+@{
+    ViewData["Title"] = "Afișare categorie";
+}
+
+<div class="d-flex justify-content-center mb-4">
+    <a class="btn btn-outline-success" asp-controller="Categories" asp-action="Index">Înapoi la categorii</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Name</h3>
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between p-3">
+        <a class="btn btn-success" asp-controller="Categories" asp-action="Edit" asp-route-id="@Model.Id">Editează categoria</a>
+
+        <form method="post" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
+            <button class="btn btn-danger" type="submit">Șterge categoria</button>
+        </form>
+    </div>
+</div>

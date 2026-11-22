@@ -9,6 +9,7 @@ namespace CampusMarket.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Numele Categoriei este obligatoriu!")]
+        [StringLength(100, ErrorMessage = "Numele categoriei poate avea maxim 100 de caractere!")]
         [Display(Name = "Nume Categorie")]
         public string Name { get; set; } = string.Empty;
 
