@@ -64,6 +64,7 @@ namespace CampusMarket.Controllers
             }
             catch (Exception)
             {
+                ModelState.AddModelError("", "A aparut o eroare la salvare");
                 return View(cat);
             }
         }
@@ -106,6 +107,7 @@ namespace CampusMarket.Controllers
             }
             catch(Exception)
             {
+                ModelState.AddModelError("", "A aparut o eroare la salvare");
                 return View(reqCat);
             }
         }

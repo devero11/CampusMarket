@@ -23,7 +23,7 @@ namespace CampusMarket.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            if(User.IsInRole("Seller") || User.IsInRole("Admin"))
+            if(User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -42,7 +42,7 @@ namespace CampusMarket.Controllers
         {
             if (User.IsInRole("Admin") || User.IsInRole("Seller"))
             {
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
              var userId = _userManager.GetUserId(User);
@@ -103,8 +103,15 @@ namespace CampusMarket.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(request.UserId);
-            if (user != null || !await _userManager.IsInRoleAsync(user, "Seller")){
-                await _userManager.AddToRoleAsync(user, "Seller");
+            if (user == null) return NotFound();
+            if(!await _userManager.IsInRoleAsync(user, "Seller"))
+            {
+                var result = await _userManager.AddToRoleAsync(user, "Seller");
+                if (!result.Succeeded)
+                {
+                    TempData["message"] = "erore la atribuirea rolului de vanzator";
+                    return RedirectToAction("Index");
+                }
             }
             request.Status = "Aprobata";
             await _db.SaveChangesAsync();
