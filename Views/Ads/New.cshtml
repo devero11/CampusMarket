@@ -1,0 +1,64 @@
+﻿@model CampusMarket.Models.Ad
+
+@{
+    ViewData["Title"] = "Adauga anunt";
+}
+
+<h2 class="mb-4">Adauga anunt nou</h2>
+
+<form method="post" asp-controller="Ads" asp-action="New" enctype="multipart/form-data" class="card p-4">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Titlu</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Descriere</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Price" class="form-label">Pret (RON)</label>
+            <input asp-for="Price" type="number" step="0.01" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="Stock" class="form-label">Stoc</label>
+            <input asp-for="Stock" type="number" class="form-control" />
+            <span asp-validation-for="Stock" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Condition" class="form-label">Starea produsului</label>
+            <select asp-for="Condition" class="form-select">
+                <option value="">-- Selecteaza starea --</option>
+                <option value="Nou">Nou</option>
+                <option value="Ca nou">Ca nou</option>
+                <option value="Folosit">Folosit</option>
+            </select>
+            <span asp-validation-for="Condition" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label asp-for="CategoryId" class="form-label">Categorie</label>
+            <select asp-for="CategoryId" asp-items="Model.Categ" class="form-select">
+                <option value="">-- Selecteaza categoria --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Imagine produs</label>
+        <input type="file" id="image" name="image" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Publica anuntul</button>
+</form>

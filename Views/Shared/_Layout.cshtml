@@ -32,6 +32,15 @@
                                 <a class="nav-link text-dark" asp-controller="SellerRequests" asp-action="Create">Devino vanzator</a>
                             </li>
                         }
+                        @if (User.IsInRole("Seller"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Ads" asp-action="New">Adauga anunt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Ads" asp-action="MyAds">Anunturile mele</a>
+                            </li>
+                        }
 
                         @if (User.IsInRole("Admin"))
                         {

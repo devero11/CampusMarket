@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace CampusMarket.Models
 {
     public class Ad
@@ -23,7 +25,7 @@ namespace CampusMarket.Models
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "Stocul este obligatoriu.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Stocul trebuie sa fie mai mare ca 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Stocul trebuie sa fie mai mare sau egal ca 0.")]
         public int Stock { get; set; }
 
         [Required(ErrorMessage = "Starea produsului este obligatorie.")]
@@ -40,16 +42,20 @@ namespace CampusMarket.Models
 
         [Required(ErrorMessage = "Categoria este obligatorie.")]
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; } = null!;
+        public virtual Category? Category { get; set; } 
 
 
         [Required]
         public string SellerId { get; set; } = string.Empty;
-        public virtual IdentityUser Seller { get; set; } = null!;
+        public virtual IdentityUser? Seller { get; set; } 
 
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
         public virtual ICollection<Faq> Faqs { get; set; } = new List<Faq>();
         public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
         public virtual ICollection<FavoriteItem> FavoriteItems { get; set; } = new List<FavoriteItem>();
+
+
+        [NotMapped]
+        public IEnumerable<SelectListItem>? Categ { get; set; }
     }
 }
