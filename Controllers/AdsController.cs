@@ -66,16 +66,24 @@ namespace CampusMarket.Controllers
                 await image.CopyToAsync(stream); 
             }
 
+            try
+            {
+                ad.ImageUrl = "/images/" + fileName;
+                ad.SellerId = _userManager.GetUserId(User)!;
+                ad.Status = "In asteptare";
+                ad.isActive = true;
 
-            ad.ImageUrl = "/images/" + fileName;
-            ad.SellerId = _userManager.GetUserId(User)!;
-            ad.Status = "In asteptare";
-            ad.isActive = true;
-
-            _db.Ads.Add(ad);
-            await _db.SaveChangesAsync();
-            TempData["message"] = "Anuntul a fost adaugat si este in asteptarea aprobarii administratorului";
-            return RedirectToAction("MyAds");
+                _db.Ads.Add(ad);
+                await _db.SaveChangesAsync();
+                TempData["message"] = "Anuntul a fost adaugat si este in asteptarea aprobarii administratorului";
+                return RedirectToAction("MyAds");
+            }
+            catch(Exception)
+            {
+                ModelState.AddModelError("", "A aparut o eroare la salvarea anuntului. Te rugam sa incerci din nou!");
+                ad.Categ = await GetAllCategories();
+                return View(ad);
+            }
         }
 
 

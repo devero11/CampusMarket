@@ -5,8 +5,9 @@
 }
 
 <h2 class="mb-4">Adauga anunt nou</h2>
-
 <form method="post" asp-controller="Ads" asp-action="New" enctype="multipart/form-data" class="card p-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
     <div class="mb-3">
         <label asp-for="Title" class="form-label">Titlu</label>
         <input asp-for="Title" class="form-control" />
